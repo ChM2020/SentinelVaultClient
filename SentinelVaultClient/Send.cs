@@ -18,23 +18,22 @@ namespace SentinelVaultClient
     public class Send
     {
        
-        public static string  AddCollectable (string name, byte[] content)
+        public static string  AddCollectable (string name, Collectable obj)
         {
             DeviceSecureIdentity id = Device.GetDeviceSecureIdentity(name);
-            Collectable obj = new Collectable();
             obj.ObjectID = Guid.NewGuid();
             // Digital Object
-            obj.Content = content;
-            obj.ContentHash = Device.ComputeHash(content);
+            obj.ContentHash = Device.ComputeHash(obj.Content);
             obj.ContentSignature = Device.SignHash(name, obj.ContentHash);
             // Creator
             obj.ObjectCreator = id.sin;
             obj.ObjectCreatorPublicKey = id.ecdsa_PublicKeyBlob;
             obj.ObjectCreatorExchangeKey = id.ecdh_PublicKeyBlob;
             // Owner
+            obj.ObjectOwner = obj.ObjectCreator; // Make the same
             byte[] ownerObjHash = Device.ComputeHash(obj.ObjectID.ToByteArray().Concat(obj.ContentHash).ToArray());
             obj.ObjectOwnerSignature = Device.SignHash(name, ownerObjHash);
-
+         
             // Add Host details
             obj.VaultSecureIdentity = id.host_sin;
             obj.VaultEcdhPublicKey = id.host_sin_ecdh_PublicKeyBlob;

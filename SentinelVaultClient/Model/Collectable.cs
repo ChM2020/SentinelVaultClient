@@ -39,5 +39,10 @@ namespace SentinelVaultClient.Model
 
         // Shared
         public byte[] EphemeralDhmPublicKeyBlob { get; set; }
+
+        public Collectable()
+        {
+            ObjectType = "1.3.6.1.4.1.3220.1.1.2"; // CollectableObject(2)
+        }
     }
 }

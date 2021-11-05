@@ -11,8 +11,7 @@ namespace SentinelVaultClient
 {
     /// <summary>
     /// This is a public domain, non hardware based software cryptographic provider.
-    /// A Hardware based TPM based provider is proprietry, and avaiable from your Payment Node Operator.
-    /// This client has been designed to support the generic risks assocaited with payments upto $1,000 of value.
+    /// A Hardware based TPM based provider is proprietry, and avaiable from your Sentinal Provider.
     /// </summary>
     class Provider
     {
@@ -24,7 +23,6 @@ namespace SentinelVaultClient
       /// <returns>Secure Identity</returns>
         public static string GenECDSAKeys(string keyName)
         {
-
             const bool MachineKey = false;
             if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
@@ -68,8 +66,7 @@ namespace SentinelVaultClient
         /// <returns>Public Key</returns>
         public static byte[]  GenECDHKeys(string keyName)
         {
-
-            keyName = GetECDHKeyName(keyName); ;
+            keyName = GetECDHKeyName(keyName);
             const bool MachineKey = false;
             if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
@@ -106,6 +103,11 @@ namespace SentinelVaultClient
                 throw new CryptographicException($"The key with the name '{keyName}' does not exists!");
             }
         }
+        /// <summary>
+        /// Force slot seperation for key types
+        /// </summary>
+        /// <param name="keyName">key slot</param>
+        /// <returns></returns>
         public static string GetECDHKeyName(string keyName)
         {
             return keyName + "ECDH";

@@ -12,10 +12,12 @@ using vm.data.library.blockchain.api.device.Model;
 
 namespace SentinelVaultClient
 {
+    /// <summary>
+    /// Provides Windows 10 based Client Support...
+    /// </summary>
     public class Device
     {
-
-               
+        #region Settings              
         public static void SaveDeviceSecureIdentities(DeviceSecureIdentities ids)
         {
             Settings.Default.SECUREIDENTIES = ids.asJason();
@@ -47,14 +49,15 @@ namespace SentinelVaultClient
             // Save
             SaveDeviceSecureIdentities(ids);
         }
-
+        #endregion
+        #region KeyStorage
         public static byte[] GetHostECDHKey(string name)
         {
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
             return id.host_sin_ecdh_PublicKeyBlob;
         }
 
-        #region KeyGeneration
+        
         /// <summary>
         /// Generate and Store ECDSA Device Identity Key Pairs
         /// </summary>
@@ -62,7 +65,7 @@ namespace SentinelVaultClient
         /// <param name="sin">Secure Identity</param>
         /// <param name="host_sin">Host Secure Identity</param>
         /// <returns></returns>
-        public static string GenECDSAKeys(string name, string entity_sin, string host_sin)
+        public static string GenECDSAKeys(string name, string host_sin)
         {
             string sin = Provider.GenECDSAKeys(name);
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
@@ -70,7 +73,8 @@ namespace SentinelVaultClient
             {
                 // Update Existing
                 id.ecdsa_PublicKeyBlob = Provider.GetECDSAPubKey(name);
-                id.sin = SecureIdentity(id.ecdsa_PublicKeyBlob); 
+                id.sin = SecureIdentity(id.ecdsa_PublicKeyBlob);
+                id.host_sin = host_sin;
             }
             else
             {
@@ -90,7 +94,7 @@ namespace SentinelVaultClient
         /// <summary>
         /// Generate and Store ECDH Key Pairs
         /// </summary>
-        public static void GenECDHKeys(string name, string sin, string host_sin)
+        public static void GenECDHKeys(string name)
         {
             Provider.GenECDHKeys(name);
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
@@ -105,9 +109,6 @@ namespace SentinelVaultClient
                 id = new DeviceSecureIdentity
                 {
                     label = name,
-                    entity_sin = sin,
-                    host_sin = host_sin,
-
                     // ECDH
                     ecdh_PublicKeyBlob = Provider.GetECDHPubKey(name)
                 };
@@ -116,6 +117,7 @@ namespace SentinelVaultClient
             SaveDeviceSecureIdentity(id);
         }
         #endregion
+        #region Support
         /// <summary>
         /// Sign the SHA256 hash of the data
         /// </summary>
@@ -134,6 +136,8 @@ namespace SentinelVaultClient
             byte[] hashBytes = dSHA256.ComputeHash(data);
             return hashBytes;
         }
+        #endregion
+        #region DeviceSecureIdentity
         /// <summary>
         /// Sign the SHA256 Hash
         /// </summary>
@@ -142,7 +146,6 @@ namespace SentinelVaultClient
         /// <returns></returns>
         public static byte[] SignHash(string name, byte[] hash)
         {
-
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
             byte[] signature = Provider.SignHash(hash, id.label);
             bool bResult = Provider.VerifyHash(hash, signature, name);
@@ -159,8 +162,6 @@ namespace SentinelVaultClient
         public static byte[] SignData(string name, byte[] data)
         {
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
-
-
             byte[] signature = Provider.SignData(data, id.label);
             bool bResult = Provider.VerifyData(data, signature, name);
             if (bResult == false)
@@ -179,7 +180,6 @@ namespace SentinelVaultClient
         {
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
             return Provider.VerifyHash(hash, signature, id.label);
-          
         }
         /// <summary>
         /// Verify SHA256 of data, signature
@@ -234,6 +234,7 @@ namespace SentinelVaultClient
             return Convert.ToBase64String(hash.ComputeHash(PublicKey));
 
         }
+        #endregion
 
     }
 }
