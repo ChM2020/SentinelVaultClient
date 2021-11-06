@@ -43,7 +43,7 @@ namespace SentinelVaultClient
             
            // Setup HTTP Post
             HttpClient _httpClient = new(); 
-            String _uri = "http://localhost:7071/api/VaultAddObject";
+            String _uri = "https://functionsentinel.azurewebsites.net/api/VaultAddObject";
             _httpClient.BaseAddress = new Uri(_uri);
             _httpClient.DefaultRequestHeaders.Add("x-token", id.token); // Add API token for this Vault Provider
             try
