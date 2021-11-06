@@ -10,6 +10,10 @@ namespace SentinelVaultClient
         {
             // Source Code Respository 
             // https://github.com/ChM2020/SentinelVaultClient
+            // The code is provided as is, with no WARRENTY or SUPPORT.
+            //  Any support is via the Issues and Discussions facilities..
+            //  https://github.com/ChM2020/SentinelVaultClient/issues , https://github.com/ChM2020/SentinelVaultClient/discussions
+
 
             // Step 1 Initialise Device Crypyo Support
             // The Digital Object Creator
