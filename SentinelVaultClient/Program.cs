@@ -11,7 +11,7 @@ namespace SentinelVaultClient
             // Source Code Respository 
             // https://github.com/ChM2020/SentinelVaultClient
             // The code is provided as is, with no WARRENTY or SUPPORT.
-            //  Any support is via the Issues and Discussions facilities..
+            // Any support is on an as provided basis, soley via the Issues and Discussions facilities..
             //  https://github.com/ChM2020/SentinelVaultClient/issues , https://github.com/ChM2020/SentinelVaultClient/discussions
 
 
