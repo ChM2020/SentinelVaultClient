@@ -17,7 +17,12 @@ namespace SentinelVaultClient
 {
     public class Send
     {
-       
+       /// <summary>
+       /// Vault Collectable Digital Object
+       /// </summary>
+       /// <param name="name">Provider Slot</param>
+       /// <param name="obj">Collectable Object</param>
+       /// <returns>Vaulted Collectable Object</returns>
         public static string  AddCollectable (string name, Collectable obj)
         {
             DeviceSecureIdentity id = Device.GetDeviceSecureIdentity(name);
@@ -36,8 +41,7 @@ namespace SentinelVaultClient
          
             // Add Host details
             obj.VaultSecureIdentity = id.host_sin;
-            obj.VaultEcdhPublicKey = id.host_sin_ecdh_PublicKeyBlob;
-
+            
            // Setup HTTP Post
             HttpClient _httpClient = new(); 
             String _uri = "http://localhost:7071/api/VaultAddObject";

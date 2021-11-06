@@ -12,7 +12,7 @@ namespace SentinelVaultClient
 
             // The Digital Object Creator
             String labelCreator = "Sentinal-Creator";
-            String vaultProviderSecureIdentity = String.Empty; // Obtain from your Vault Serive provider
+            String vaultProviderSecureIdentity = String.Empty; // Obtain from your Vault Service provider
             Device.GenECDSAKeys(labelCreator, vaultProviderSecureIdentity);
             Device.GenECDHKeys(labelCreator);
 
@@ -26,6 +26,7 @@ namespace SentinelVaultClient
             obj.ObjectFileName = fi.Name;
             // Add Digital Object
             obj.Content = System.IO.File.ReadAllBytes(path);
+            // Submit to Vault
             Send.AddCollectable(labelCreator, obj);
 
 
