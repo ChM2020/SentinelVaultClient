@@ -9,7 +9,8 @@ namespace SentinelVaultClient.Model
         public byte[] ContentHash { get; set; }
         public byte[] ContentSignature { get; set; }
         public byte[] ContentSignaturePublicKey { get; set; }
-        public string ContentUri { get; set; }
+        // ERC721 representive image, set to width between 320 and 1080 pixels and aspect ratio between 1.91:1 and 4:5 inclusive
+        public string ContentUri { get; set; } 
 
 
         // Vaulted Object
