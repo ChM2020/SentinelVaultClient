@@ -10,14 +10,14 @@ namespace SentinelVaultClient
         {
             // Source Code Respository 
             // https://github.com/ChM2020/SentinelVaultClient
-            // The code is provided as is, with no WARRENTY or SUPPORT.
-            // Any support is on an as provided basis, soley via the Issues and Discussions facilities..
-            //  https://github.com/ChM2020/SentinelVaultClient/issues , https://github.com/ChM2020/SentinelVaultClient/discussions
+            // The code is provided "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+            // Any support is on an, as provided basis, soley via the Issues and Discussions facilities..
+            // https://github.com/ChM2020/SentinelVaultClient/issues , https://github.com/ChM2020/SentinelVaultClient/discussions
 
 
-            // Step 1 Initialise Device Crypyo Support
-            // The Digital Object Creator
-            String labelCreator = "Sentinal-Creator"; // Change
+                        // Step 1 Initialise Device Crypyo Support
+                        // The Digital Object Creator
+                        String labelCreator = "Sentinal-Creator"; // Change
             String vaultProviderSecureIdentity = String.Empty; // Obtain from your Vault Service provider
             String api_token = String.Empty; // Obtain API Token from your Vault Service Provider
             // Generate Creator Key Pairs
