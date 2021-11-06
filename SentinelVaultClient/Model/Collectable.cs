@@ -43,6 +43,7 @@ namespace SentinelVaultClient.Model
         public Collectable()
         {
             ObjectType = "1.3.6.1.4.1.3220.1.1.2"; // CollectableObject(2)
+            ObjectID = Guid.NewGuid();
         }
     }
 }

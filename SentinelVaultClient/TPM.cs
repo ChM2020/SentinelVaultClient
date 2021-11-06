@@ -38,11 +38,8 @@ namespace SentinelVaultClient
                 // Return Secure Identity 
                 return  "0101" + RIPEMD160.Create().ComputeHash( SHA256.Create().ComputeHash(publicKeyBytes));
            }
-            else
-            {
-                throw new CryptographicException($"The key with the name '{keyName}' already exists!");
-            }
-        }
+            return String.Empty;
+         }
         /// <summary>
         /// Export ECDSA public key from provider key store
         /// </summary>
@@ -80,10 +77,7 @@ namespace SentinelVaultClient
                 CngKey key =  CngKey.Create(CngAlgorithm.ECDiffieHellmanP256, keyName, keyParams);
                 return key.Export(System.Security.Cryptography.CngKeyBlobFormat.EccPublicBlob);
             }
-            else
-            {
-                throw new CryptographicException($"The key with the name '{keyName}' exists!");
-            }
+            return null;
         }
         /// <summary>
         /// Export ECDH public key from provider key store
@@ -120,7 +114,7 @@ namespace SentinelVaultClient
         /// <returns>Signature</returns>
         public static byte[] SignHash(byte[] hashBytes, string keyName)
         {
-            if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
+            if (CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
                 CngKey key = CngKey.Open(keyName);
                 using ECDsaCng signer = new (key);
@@ -139,7 +133,7 @@ namespace SentinelVaultClient
         /// <returns>boolean result</returns>
         public static bool VerifyHash(byte[] hashBytes, byte[] signature, string keyName)
         {
-            if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
+            if (CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
                 CngKey key = CngKey.Open(keyName);
                 using ECDsaCng signer = new (key);
@@ -161,7 +155,7 @@ namespace SentinelVaultClient
             {
                 hashBytes = dSHA256.ComputeHash(data);
             }
-            if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
+            if (CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
                 CngKey key = CngKey.Open(keyName);
                 using ECDsaCng signer = new (key);
@@ -184,7 +178,7 @@ namespace SentinelVaultClient
             {
                 hashBytes = dSHA256.ComputeHash(data);
             }
-            if (!CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
+            if (CngKey.Exists(keyName, microsoftSoftwareKeyStorageProvider))
             {
                 CngKey key = CngKey.Open(keyName);
                 using ECDsaCng signer = new (key);

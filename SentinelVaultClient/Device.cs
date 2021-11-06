@@ -65,7 +65,7 @@ namespace SentinelVaultClient
         /// <param name="sin">Secure Identity</param>
         /// <param name="host_sin">Host Secure Identity</param>
         /// <returns></returns>
-        public static string GenECDSAKeys(string name, string host_sin)
+        public static string GenECDSAKeys(string name, string host_sin, string api_token)
         {
             string sin = Provider.GenECDSAKeys(name);
             DeviceSecureIdentity id = GetDeviceSecureIdentity(name);
@@ -75,6 +75,7 @@ namespace SentinelVaultClient
                 id.ecdsa_PublicKeyBlob = Provider.GetECDSAPubKey(name);
                 id.sin = SecureIdentity(id.ecdsa_PublicKeyBlob);
                 id.host_sin = host_sin;
+                id.token = api_token;
             }
             else
             {
@@ -86,6 +87,8 @@ namespace SentinelVaultClient
                     ecdsa_PublicKeyBlob = Provider.GetECDSAPubKey(name)
                 };
                 id.sin = SecureIdentity(id.ecdsa_PublicKeyBlob);
+                id.host_sin = host_sin;
+                id.token = api_token;
             }
             // Save 
             SaveDeviceSecureIdentity(id);
@@ -220,9 +223,12 @@ namespace SentinelVaultClient
         public static string SecureIdentity(byte[] publicKey)
         {
             byte[] hashBytes = RIPEMD160.Create().ComputeHash(SHA256.Create().ComputeHash(publicKey));
-            return "0101" + Encoding.UTF8.GetString( hashBytes);
+            return "0101" + ToHex( hashBytes);
         }
-       
+        private static string ToHex(byte[] bytes)
+        {
+          return string.Concat(Array.ConvertAll(bytes, b => b.ToString("X2")));
+        }
         /// <summary>
         /// Generate Key Identifier
         /// </summary>

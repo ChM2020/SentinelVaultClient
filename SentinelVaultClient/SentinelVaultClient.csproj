@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Reference Include="vm.data.library.blockchain.api.device">
-      <HintPath>F:\Projects\Public\PaymentClient\Payment Client\bin\Debug\net5.0\vm.data.library.blockchain.api.device.dll</HintPath>
+      <HintPath>bin\vm.data.library.blockchain.api.device.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -9,17 +9,19 @@ namespace SentinelVaultClient
         static void Main(string[] args)
         {
             // Step 1 Initialise Device Crypyo Support
-
             // The Digital Object Creator
-            String labelCreator = "Sentinal-Creator";
+            String labelCreator = "Sentinal-Creator"; // Change
             String vaultProviderSecureIdentity = String.Empty; // Obtain from your Vault Service provider
-            Device.GenECDSAKeys(labelCreator, vaultProviderSecureIdentity);
+            String api_token = String.Empty; // Obtain API Token from your Vault Service Provider
+            // Generate Creator Key Pairs
+            Device.GenECDSAKeys(labelCreator, vaultProviderSecureIdentity, api_token);
             Device.GenECDHKeys(labelCreator);
 
             // Step 2 Load Digital Object Content into Collectable
             Collectable obj = new Collectable();
             // Access Digital Object
-            string path = String.Empty;  
+            string path = String.Empty; // Set to digital object location
+
             FileInfo fi = new FileInfo(path);
             obj.ObjectSize = fi.Length;
             obj.ObjectCreationDate = fi.CreationTime;
@@ -27,9 +29,12 @@ namespace SentinelVaultClient
             // Add Digital Object
             obj.Content = System.IO.File.ReadAllBytes(path);
             // Submit to Vault
-            Send.AddCollectable(labelCreator, obj);
+            string json = Send.AddCollectable(labelCreator, obj);
+            if (!String.IsNullOrEmpty(json))
+            {
+                // Save Vaulted Object
 
-
+            }
         }
     }
 }

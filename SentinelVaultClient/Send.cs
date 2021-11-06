@@ -1,4 +1,5 @@
-﻿using SentinelVaultClient.Model;
+﻿using Newtonsoft.Json;
+using SentinelVaultClient.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,6 @@ namespace SentinelVaultClient
         public static string  AddCollectable (string name, Collectable obj)
         {
             DeviceSecureIdentity id = Device.GetDeviceSecureIdentity(name);
-            obj.ObjectID = Guid.NewGuid();
             // Digital Object
             obj.ContentHash = Device.ComputeHash(obj.Content);
             obj.ContentSignature = Device.SignHash(name, obj.ContentHash);
@@ -44,15 +44,25 @@ namespace SentinelVaultClient
             
            // Setup HTTP Post
             HttpClient _httpClient = new(); 
-            String _uri = "http://localhost:7071/api/VaultAddObject";
+            String _uri = "https://functionsentinel.azurewebsites.net/api/VaultAddObject";
             _httpClient.BaseAddress = new Uri(_uri);
+            _httpClient.DefaultRequestHeaders.Add("x-token", id.token); // Add API token for this Vault Provider
             try
             {
+                // Generate Json Content
+                var postContent = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+
                 // Post Content
-                HttpResponseMessage response = _httpClient.PostAsJsonAsync(_uri, obj).Result;
-                // Returned Vaulted object
-                string sjson = response.Content.ReadAsStringAsync().Result;
-                return sjson;
+                HttpResponseMessage response = _httpClient.PostAsync(_uri, postContent).Result;
+                // Process response
+                if (response.IsSuccessStatusCode)
+                {
+                    // Returned Vaulted object
+                    string sjson = response.Content.ReadAsStringAsync().Result;
+                    return sjson;
+                }
+                else
+                    return String.Empty;
             }
             catch (Exception ex)
             {
