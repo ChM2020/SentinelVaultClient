@@ -15,7 +15,7 @@ namespace SentinelVaultClient
             // https://github.com/ChM2020/SentinelVaultClient/issues , https://github.com/ChM2020/SentinelVaultClient/discussions
 
 
-            // Step 1 Initialise Device Crypyo Support
+            // Step 1 Initialise Device Cryptographic Support
             // The Digital Object Creator
             String labelCreator = "Sentinal-Creator"; // Change
             String vaultProviderSecureIdentity = String.Empty; // Obtain from your Vault Service provider

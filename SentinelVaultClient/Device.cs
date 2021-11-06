@@ -200,11 +200,17 @@ namespace SentinelVaultClient
         /// <returns></returns>
         public static byte[] GetECDSAPubKey(string keyName)
         {
-            CngProvider keyProvider = new CngProvider("Microsoft Platform Crypto Provider");
-            var k = CngKey.Open(keyName, keyProvider);
-            return k.Export(CngKeyBlobFormat.EccPublicBlob);
+            return Provider.GetECDSAPubKey(keyName);
         }
-      
+        /// <summary>
+        /// Retrieve ECDH Public Key
+        /// </summary>
+        /// <param name="keyName"></param>
+        /// <returns></returns>
+        public static byte[] GetECDHPubKey(string keyName)
+        {
+            return Provider.GetECDHPubKey(keyName);
+        }
         #endregion
 
     }
