@@ -13,11 +13,11 @@ namespace SentinelVaultClient {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Users : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static Users defaultInstance = ((Users)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Users())));
         
-        public static Settings Default {
+        public static Users Default {
             get {
                 return defaultInstance;
             }
@@ -26,12 +26,12 @@ namespace SentinelVaultClient {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SECUREIDENTIES {
+        public string DEVICEIDENTIES {
             get {
-                return ((string)(this["SECUREIDENTIES"]));
+                return ((string)(this["DEVICEIDENTIES"]));
             }
             set {
-                this["SECUREIDENTIES"] = value;
+                this["DEVICEIDENTIES"] = value;
             }
         }
     }

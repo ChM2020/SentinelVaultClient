@@ -10,8 +10,6 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using vm.data.library.blockchain.api.device;
-using vm.data.library.blockchain.api.device.Model;
 
 
 namespace SentinelVaultClient
@@ -26,7 +24,8 @@ namespace SentinelVaultClient
        /// <returns>Vaulted Collectable Object</returns>
         public static string  AddCollectable (string name, Collectable obj)
         {
-            DeviceSecureIdentity id = Device.GetDeviceSecureIdentity(name);
+            DeviceSecureIdentities ids = new DeviceSecureIdentities(Users.Default.DEVICEIDENTIES);
+            DeviceSecureIdentity id = ids.GetDeviceSecureIdentity(name);
             // Digital Object
             obj.ContentHash = Device.ComputeHash(obj.Content);
             obj.ContentSignature = Device.SignHash(name, obj.ContentHash);
@@ -44,7 +43,7 @@ namespace SentinelVaultClient
             
            // Setup HTTP Post
             HttpClient _httpClient = new(); 
-            String _uri = "https://functionsentinel.azurewebsites.net/api/VaultAddObject";
+            String _uri = "http://localhost:7071/api/VaultAddObject";
             _httpClient.BaseAddress = new Uri(_uri);
             _httpClient.DefaultRequestHeaders.Add("x-token", id.token); // Add API token for this Vault Provider
             try

@@ -8,6 +8,7 @@ namespace SentinelVaultClient
     {
         static void Main(string[] args)
         {
+
             // Step 1 Initialise Device Crypyo Support
             // The Digital Object Creator
             String labelCreator = "Sentinal-Creator"; // Change
@@ -20,7 +21,7 @@ namespace SentinelVaultClient
             // Step 2 Load Digital Object Content into Collectable
             Collectable obj = new Collectable();
             // Access Digital Object
-            string path = String.Empty; // Set to digital object location
+            string path = String.Empty; // HD red ballon from movie
 
             FileInfo fi = new FileInfo(path);
             obj.ObjectSize = fi.Length;
@@ -33,7 +34,6 @@ namespace SentinelVaultClient
             if (!String.IsNullOrEmpty(json))
             {
                 // Save Vaulted Object
-
             }
         }
     }
